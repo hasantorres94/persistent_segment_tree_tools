@@ -25,3 +25,10 @@ The operation and identity are passed at construction as plain callables, so the
 - An empty array yields a tree whose `query` always returns the identity and whose `length` is 0.
 - The identity must be the true neutral element of your operation: `combine(identity, x) == x`. For `max` over non-negative data, `0` works; over arbitrary integers, use a sufficiently negative value.
 - Ranges are half-open: `query(1, 3)` covers indices 1 and 2, matching Python slicing.
+
+## Performance
+
+The window keeps a bounded buffer, so `push` is constant time and memory does not
+grow with the length of the stream. `peak` and `trough` are linear in the window
+size, which is the trade that keeps `push` cheap.
+
